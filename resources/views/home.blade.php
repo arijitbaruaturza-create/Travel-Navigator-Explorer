@@ -26,7 +26,12 @@
             </nav>
         </div>
     </header>
-
+	<div class="text-center my-6">
+        <a href="{{ route('rooms.index') }}"
+           class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+            Manager
+        </a>
+    </div>
     <!-- Hero Section -->
     <section class="relative bg-cover bg-center h-[80vh]" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/7d/Cox%27s_Bazar_Beach.jpg');">
         <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white p-4">

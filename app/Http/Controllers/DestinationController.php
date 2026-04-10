@@ -7,33 +7,50 @@ use App\Models\Destination;
 
 class DestinationController extends Controller
 {
-    // Show all destinations
+    // Show all destinations (sorted by rating 🔥)
     public function index()
     {
-        $destinations = Destination::all();
+        $destinations = Destination::orderBy('rating', 'desc')->get();
         return view('destinations.index', compact('destinations'));
     }
 
-    // Search destinations by name or category
+    // Search destinations
     public function search(Request $request)
     {
         $query = $request->input('query', '');
+        $category = $request->input('category', '');
 
-        if (empty($query)) {
-            return response()->json([]);
+        $destinations = Destination::query();
+
+        if (!empty($query)) {
+            $destinations->where(function ($q) use ($query) {
+                $q->where('name', 'LIKE', "%{$query}%")
+                  ->orWhere('category', 'LIKE', "%{$query}%");
+            });
         }
 
-        $destinations = Destination::where('name', 'LIKE', "%{$query}%")
-            ->orWhere('category', 'LIKE', "%{$query}%")
-            ->get();
+        if (!empty($category)) {
+            $destinations->where('category', 'LIKE', "%{$category}%");
+        }
+
+        // 🔥 Sort by rating
+        $destinations = $destinations->orderBy('rating', 'desc')->get();
 
         return response()->json($destinations);
     }
 
-    // Show a single destination detail
+    // Show single destination
     public function show($id)
     {
         $destination = Destination::findOrFail($id);
-        return view('destinations.show', compact('destination'));
+
+        // Related by category (top rated)
+        $related = Destination::where('category', $destination->category)
+            ->where('id', '!=', $destination->id)
+            ->orderBy('rating', 'desc')
+            ->take(4)
+            ->get();
+
+        return view('destinations.show', compact('destination', 'related'));
     }
 }

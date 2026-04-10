@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Room;
+use App\Models\RoomRequest; // ✅ Added this import
 
 class RoomController extends Controller
 {
-    // Show all rooms
+    // Show all approved rooms
     public function index()
     {
         $rooms = Room::all();
@@ -18,77 +19,97 @@ class RoomController extends Controller
     public function show($id)
     {
         $room = Room::find($id);
+        if (!$room) {
+            return redirect()->back()->with('error', 'Room not found.');
+        }
         return view('room', compact('room'));
     }
 
-    // Store a new room
+    // Store a new room request
     public function store(Request $request)
     {
-        $imagePath = null;
+        // 🔹 Validate input
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'sqft' => 'nullable|numeric',
+            'persons' => 'nullable|numeric',
+            'description' => 'required|string',
+            'services' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
+        // 🔹 Handle image upload
+        $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('rooms', 'public');
         }
 
-        Room::create([
+        // 🔹 Store into room_requests table
+        RoomRequest::create([
             'name' => $request->name,
             'price' => $request->price,
-            'description' => $request->description,
-            'image' => $imagePath,
             'sqft' => $request->sqft,
             'persons' => $request->persons,
-			'services' => $request->services,
+            'description' => $request->description,
+            'services' => $request->services,
+            'image' => $imagePath,
+            'status' => 'pending', // default status
         ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Room submitted for admin approval!');
     }
 
-    // Show edit form
+    // Show edit form for approved rooms
     public function edit($id)
     {
         $room = Room::find($id);
+        if (!$room) {
+            return redirect()->back()->with('error', 'Room not found.');
+        }
         return view('edit-room', compact('room'));
     }
 
-    // Update room
+    // Update an approved room
     public function update(Request $request, $id)
-	{
-		$room = Room::find($id);
+    {
+        $room = Room::find($id);
+        if (!$room) {
+            return redirect()->back()->with('error', 'Room not found.');
+        }
 
-		if ($request->hasFile('image')) {
-			$imagePath = $request->file('image')->store('rooms', 'public');
-			$room->image = $imagePath;
-		}
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('rooms', 'public');
+            $room->image = $imagePath;
+        }
 
-		$room->name = $request->name;
-		$room->price = $request->price;
-		$room->description = $request->description;
-		$room->sqft = $request->sqft;
-		$room->persons = $request->persons;
-		$room->services = $request->services; // 👈 ADD THIS
+        $room->name = $request->name;
+        $room->price = $request->price;
+        $room->description = $request->description;
+        $room->sqft = $request->sqft;
+        $room->persons = $request->persons;
+        $room->services = $request->services;
 
-		$room->save();
+        $room->save();
 
-		return redirect('/rooms');
-
+        return redirect('/rooms')->with('success', 'Room updated successfully.');
     }
 
-    // Delete a room
+    // Delete an approved room
     public function delete($id)
     {
         $room = Room::find($id);
-
         if ($room) {
             $room->delete();
+            return redirect('/rooms')->with('success', 'Room deleted successfully.');
         }
-
-        return redirect('/rooms');
+        return redirect('/rooms')->with('error', 'Room not found.');
     }
 
     /*
-    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------
     | Cost Calculator Feature
-    |--------------------------------------------------------------------------
+    |--------------------------------------------------------------------
     */
 
     // Show cost form
@@ -104,9 +125,8 @@ class RoomController extends Controller
         $room = Room::find($request->room_id);
         $nights = $request->nights;
 
-        // Safety check (avoid crash)
         if (!$room) {
-            return redirect()->back()->with('error', 'Room not found');
+            return redirect()->back()->with('error', 'Room not found.');
         }
 
         $total = $room->price * $nights;

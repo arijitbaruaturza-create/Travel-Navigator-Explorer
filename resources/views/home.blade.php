@@ -1,180 +1,112 @@
-<!-- resources/views/home.blade.php -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Navigator Explorer - Cox's Bazar</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 text-gray-800">
 
-    <!-- Header / Navbar -->
-    <header class="bg-blue-600 text-white">
-        <div class="container mx-auto flex justify-between items-center p-4">
-            <h1 class="text-2xl font-bold">Travel Navigator Explorer</h1>
-            <nav>
-                <ul class="flex space-x-6">
-                    <li><a href="#" class="hover:underline">Home</a></li>
-                    <li><a href="#destinations" class="hover:underline">Destinations</a></li>
-                    <li><a href="#guides" class="hover:underline">Tour Guides</a></li>
-                    <li><a href="#blogs" class="hover:underline">Blogs</a></li>
-                    <li><a href="#contact" class="hover:underline">Contact</a></li>
-                </ul>
+<body class="bg-gray-100 text-gray-800 pt-20">
+
+    <!-- Navbar -->
+    <header class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-[95%] md:w-[90%] rounded-3xl backdrop-blur-xl bg-white/30 border border-white/20 shadow-2xl">
+        <div class="container mx-auto flex justify-between items-center px-6 py-3 relative z-10">
+            
+            <div class="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 opacity-20 blur-3xl pointer-events-none"></div>
+
+            <h1 class="relative text-2xl font-extrabold text-blue-600">
+                Travel<span class="text-gray-800">Navigator</span>
+            </h1>
+
+            <nav class="hidden md:flex items-center space-x-8 text-gray-700">
+                <a href="{{ route('home') }}">Home</a>
+                <a href="{{ route('destinations.index') }}">Destinations</a>
+                <a href="#guides">Guides</a>
+                <a href="{{ route('blogs.index') }}">Blogs</a>
+                <a href="#contact">Contact</a>
             </nav>
+
+            <!-- ✅ Only Get Started Button remains -->
+            <div class="hidden md:flex space-x-4">
+                <a href="#" class="px-5 py-2 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:-translate-y-1 hover:scale-105">
+                    Get Started
+                </a>
+            </div>
+
+            <button class="md:hidden text-2xl">☰</button>
         </div>
     </header>
-	<div class="text-center my-6">
-        <a href="{{ route('rooms.index') }}"
-           class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-700 transition">
-            Manager
-        </a>
-    </div>
+
     <!-- Hero Section -->
-    <section class="relative bg-cover bg-center h-[80vh]" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/7d/Cox%27s_Bazar_Beach.jpg');">
+    <section class="relative bg-cover bg-center h-[80vh]" style="background-image: url('https://i.pinimg.com/736x/3f/31/60/3f31601947c498388838683c88aad8c4.jpg');">
         <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white p-4">
             <h2 class="text-4xl md:text-6xl font-bold mb-4">Explore Cox's Bazar</h2>
-            <p class="text-lg md:text-2xl mb-6">Plan your perfect beach getaway in Bangladesh</p>
-            <a href="{{ route('destinations.index') }}"
-                class="bg-yellow-400 text-gray-900 px-6 py-3 font-semibold rounded shadow hover:bg-yellow-500 transition">
-                Discover Destinations
-            </a>
+            <p class="text-lg md:text-2xl mb-6">Plan your perfect beach gateway in Bangladesh</p>
         </div>
     </section>
 
-    <!-- Search Bar -->
-    <section class="py-10 bg-gray-100">
-        <div class="container mx-auto flex justify-center">
-            <div class="w-full md:w-2/3">
-                <input type="text" placeholder="Search destinations, hotels, guides..." class="w-full p-4 rounded shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-        </div>
-    </section>
-
-    <!-- Destinations Section -->
+    <!-- Destinations -->
     <section id="destinations" class="py-12 container mx-auto">
         <h3 class="text-3xl font-bold text-center mb-8">Top Destinations in Cox's Bazar</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Destination Card Example -->
-            <div class="bg-white rounded shadow hover:shadow-lg transition overflow-hidden">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fc/Inani_Beach%2C_Cox%27s_Bazar_2.jpg" alt="Inani Beach" class="w-full h-48 object-cover">
+
+            <div class="bg-white rounded-xl shadow overflow-hidden">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Inani_Beach_in_the_day_%2821_February_2014%29.jpg/250px-Inani_Beach_in_the_day_%2821_February_2014%29.jpg" class="w-full h-48 object-cover">
                 <div class="p-4">
-                    <h4 class="font-bold text-xl mb-2">Inani Beach</h4>
-                    <p class="text-gray-600 mb-2">Famous for its coral stones and serene views, perfect for photography and relaxation.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-yellow-500 font-semibold">⭐⭐⭐⭐☆</span>
-                        <a href="#" class="text-blue-600 hover:underline">Explore</a>
-                    </div>
+                    <h4 class="font-bold text-xl">Inani Beach</h4>
+                    <p class="text-gray-600">Famous for coral stones and serene views.</p>
                 </div>
             </div>
-            <div class="bg-white rounded shadow hover:shadow-lg transition overflow-hidden">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Himchari_National_Park%2C_Cox%27s_Bazar.jpg" alt="Himchari" class="w-full h-48 object-cover">
+
+            <div class="bg-white rounded-xl shadow overflow-hidden">
+                <img src="https://i.pinimg.com/1200x/a5/1e/98/a51e98ee43b4599653b85a1fc38d2579.jpg" class="w-full h-48 object-cover">
                 <div class="p-4">
-                    <h4 class="font-bold text-xl mb-2">Himchari National Park</h4>
-                    <p class="text-gray-600 mb-2">Experience waterfalls, hills, and a rich variety of wildlife in this lush park.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-yellow-500 font-semibold">⭐⭐⭐⭐☆</span>
-                        <a href="#" class="text-blue-600 hover:underline">Explore</a>
-                    </div>
+                    <h4 class="font-bold text-xl">Himchari National Park</h4>
+                    <p class="text-gray-600">Waterfalls, hills, and wildlife.</p>
                 </div>
             </div>
-            <div class="bg-white rounded shadow hover:shadow-lg transition overflow-hidden">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Sea_beach%2C_Cox%27s_Bazar.JPG" alt="Sea Beach" class="w-full h-48 object-cover">
+
+            <div class="bg-white rounded-xl shadow overflow-hidden">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Spring_Lake%2C_New_Jersey_Beach_at_Sunrise.jpg" class="w-full h-48 object-cover">
                 <div class="p-4">
-                    <h4 class="font-bold text-xl mb-2">Cox's Bazar Sea Beach</h4>
-                    <p class="text-gray-600 mb-2">The longest natural sandy beach in the world, perfect for a sunset stroll.</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-yellow-500 font-semibold">⭐⭐⭐⭐⭐</span>
-                        <a href="#" class="text-blue-600 hover:underline">Explore</a>
-                    </div>
+                    <h4 class="font-bold text-xl">Sea Beach</h4>
+                    <p class="text-gray-600">World’s longest sandy beach.</p>
                 </div>
             </div>
+
         </div>
     </section>
 
-    <!-- Tour Guides Section -->
+    <!-- Guides -->
     <section id="guides" class="py-12 bg-gray-50">
         <h3 class="text-3xl font-bold text-center mb-8">Hire Local Tour Guides</h3>
         <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Guide Card Example -->
-            <div class="bg-white rounded shadow hover:shadow-lg transition overflow-hidden p-4 text-center">
-                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Guide" class="w-32 h-32 rounded-full mx-auto mb-4">
-                <h4 class="font-bold text-xl mb-2">Rahim Uddin</h4>
-                <p class="text-gray-600 mb-2">5 Years Experience | Adventure Tours</p>
-                <p class="text-gray-800 font-semibold mb-2">৳ 1500/day</p>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Hire Guide</button>
-            </div>
-            <div class="bg-white rounded shadow hover:shadow-lg transition overflow-hidden p-4 text-center">
-                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Guide" class="w-32 h-32 rounded-full mx-auto mb-4">
-                <h4 class="font-bold text-xl mb-2">Fatima Begum</h4>
-                <p class="text-gray-600 mb-2">7 Years Experience | Historical Tours</p>
-                <p class="text-gray-800 font-semibold mb-2">৳ 2000/day</p>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Hire Guide</button>
-            </div>
-            <div class="bg-white rounded shadow hover:shadow-lg transition overflow-hidden p-4 text-center">
-                <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Guide" class="w-32 h-32 rounded-full mx-auto mb-4">
-                <h4 class="font-bold text-xl mb-2">Jahid Hasan</h4>
-                <p class="text-gray-600 mb-2">3 Years Experience | City & Beach Tours</p>
-                <p class="text-gray-800 font-semibold mb-2">৳ 1200/day</p>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Hire Guide</button>
-            </div>
-        </div>
-    </section>
 
-    <!-- Blogs Section -->
-    <section id="blogs" class="py-12 container mx-auto">
-        <h3 class="text-3xl font-bold text-center mb-8">Travel Blogs & Tips</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-white rounded shadow hover:shadow-lg transition overflow-hidden p-4">
-                <h4 class="font-bold text-xl mb-2">Top 5 Beaches in Bangladesh</h4>
-                <p class="text-gray-600 mb-2">Discover the most beautiful beaches to visit besides Cox's Bazar.</p>
-                <a href="#" class="text-blue-600 hover:underline">Read More</a>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <img src="https://i.pinimg.com/736x/02/c7/85/02c785ccea228c49562ae325d74c7007.jpg" class="w-32 h-32 rounded-full mx-auto mb-4">
+                <h4 class="font-bold text-xl">Rahim Uddin</h4>
+                <p class="text-gray-600">৳1500/day</p>
             </div>
-            <div class="bg-white rounded shadow hover:shadow-lg transition overflow-hidden p-4">
-                <h4 class="font-bold text-xl mb-2">Budget Travel Guide</h4>
-                <p class="text-gray-600 mb-2">Plan your trip efficiently without breaking the bank.</p>
-                <a href="#" class="text-blue-600 hover:underline">Read More</a>
-            </div>
-            <div class="bg-white rounded shadow hover:shadow-lg transition overflow-hidden p-4">
-                <h4 class="font-bold text-xl mb-2">Hidden Gems of Cox's Bazar</h4>
-                <p class="text-gray-600 mb-2">Explore less-known attractions and secret spots for an unforgettable experience.</p>
-                <a href="#" class="text-blue-600 hover:underline">Read More</a>
-            </div>
-        </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-12 bg-gray-50">
-        <div class="container mx-auto max-w-2xl">
-            <h3 class="text-3xl font-bold text-center mb-6">Get in Touch</h3>
-            <form class="bg-white p-6 rounded shadow-md space-y-4">
-                <div>
-                    <label for="name" class="block mb-1 font-semibold">Name</label>
-                    <input type="text" id="name" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div>
-                    <label for="email" class="block mb-1 font-semibold">Email</label>
-                    <input type="email" id="email" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-                <div>
-                    <label for="message" class="block mb-1 font-semibold">Message</label>
-                    <textarea id="message" rows="5" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">Send Message</button>
-                </div>
-            </form>
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <img src="https://i.pinimg.com/1200x/b9/99/ce/b999ce3b1ad833a3eb760a742252eafe.jpg" class="w-32 h-32 rounded-full mx-auto mb-4">
+                <h4 class="font-bold text-xl">Fatima Begum</h4>
+                <p class="text-gray-600">৳2000/day</p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-4 text-center">
+                <img src="https://i.pinimg.com/736x/f3/c3/13/f3c313e23a8d810207f615a1b5ee279e.jpg" class="w-32 h-32 rounded-full mx-auto mb-4">
+                <h4 class="font-bold text-xl">Jahid Hasan</h4>
+                <p class="text-gray-600">৳1200/day</p>
+            </div>
+
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-blue-600 text-white py-6 mt-12">
-        <div class="container mx-auto text-center">
-            <p>&copy; {{ date('Y') }} Travel Navigator Explorer. All rights reserved.</p>
-            <p>Cox's Bazar, Bangladesh</p>
-        </div>
+    <footer class="bg-blue-600 text-white py-6 mt-12 text-center">
+        <p>&copy; {{ date('Y') }} Travel Navigator Explorer</p>
     </footer>
 
 </body>

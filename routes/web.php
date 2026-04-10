@@ -1,7 +1,9 @@
 <?php
 use App\Http\Controllers\RoomController;
-
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminAuthController;
 use Illuminate\Support\Facades\Route;
 
 // Home Page
@@ -26,3 +28,22 @@ Route::get('/rooms/{id}', [RoomController::class, 'show']);
 
 Route::get('/cost', [RoomController::class, 'costForm']);
 Route::post('/cost/calculate', [RoomController::class, 'calculateCost']);
+
+// Blog Routes
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs/{id}', [BlogController::class, 'show'])->name('blogs.show');
+
+// Admin Auth
+Route::get('/admin/register', [AdminAuthController::class, 'showRegister']);
+Route::post('/admin/register', [AdminAuthController::class, 'register']);
+
+Route::get('/admin/login', [AdminAuthController::class, 'showLogin']);
+Route::post('/admin/login', [AdminAuthController::class, 'login']);
+
+Route::get('/admin/logout', [AdminAuthController::class, 'logout']);
+
+// Admin Dashboard
+Route::get('/admin/dashboard', [AdminController::class, 'index']);
+Route::get('/admin/room/{id}', [AdminController::class, 'show']);
+Route::get('/admin/approve/{id}', [AdminController::class, 'approve']);
+Route::get('/admin/reject/{id}', [AdminController::class, 'reject']);

@@ -133,4 +133,29 @@ class RoomController extends Controller
 
         return view('cost_result', compact('room', 'nights', 'total'));
     }
+
+
+    //search
+    public function search(Request $request)
+    {
+        $query = Room::query();
+
+        // Budget filter
+        if ($request->min_price) {
+            $query->where('price', '>=', $request->min_price);
+        }
+
+        if ($request->max_price) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        // Guests filter
+        if ($request->guests) {
+            $query->where('persons', '>=', $request->guests);
+        }
+
+        $rooms = $query->get();
+
+        return view('search-results', compact('rooms'));
+    }
 }

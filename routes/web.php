@@ -47,3 +47,18 @@ Route::get('/admin/dashboard', [AdminController::class, 'index']);
 Route::get('/admin/room/{id}', [AdminController::class, 'show']);
 Route::get('/admin/approve/{id}', [AdminController::class, 'approve']);
 Route::get('/admin/reject/{id}', [AdminController::class, 'reject']);
+
+Route::get('/travel-budget', [RoomController::class, 'travelBudgetForm']);
+Route::post('/travel-budget/calculate', [RoomController::class, 'travelBudgetCalculate']);
+
+
+Route::get('/hotels', function () {
+    return view('hotels');
+})->name('hotels.index');
+use App\Http\Controllers\HotelController;
+
+
+Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
+Route::post('/hotels', [HotelController::class, 'store']);
+
+Route::delete('/hotels/{id}', [HotelController::class, 'destroy']);

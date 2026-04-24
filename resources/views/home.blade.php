@@ -25,7 +25,10 @@
                 <a href="#guides">Guides</a>
                 <a href="{{ route('blogs.index') }}">Blogs</a>
                 <a href="#contact">Contact</a>
+				
+				
             </nav>
+
 
             <!-- ✅ Only Get Started Button remains -->
             <div class="hidden md:flex space-x-4">

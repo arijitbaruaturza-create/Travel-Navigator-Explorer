@@ -4,31 +4,88 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Room;
-use App\Models\RoomRequest; // ✅ Added this import
+use App\Models\RoomRequest;
 
 class RoomController extends Controller
 {
-    // Show all approved rooms
+    /*
+    |--------------------------------------------------------------------------
+    | Dashboard + Search (MAIN FEATURE)
+    |--------------------------------------------------------------------------
+    */
+    public function search(Request $request)
+    {
+        $query = Room::query();
+
+        // Budget filter
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        // Guests filter
+        if ($request->filled('guests')) {
+            $query->where('persons', '>=', $request->guests);
+        }
+
+        // Date validation (optional for now)
+        if ($request->filled('checkin') && $request->filled('checkout')) {
+            $request->validate([
+                'checkin' => 'date',
+                'checkout' => 'date|after:checkin',
+            ]);
+        }
+
+        // If no filters → don't show all rooms immediately (optional UX choice)
+        if (!$request->hasAny(['min_price', 'max_price', 'guests', 'checkin', 'checkout'])) {
+            return view('customer.dashboard');
+        }
+
+        $rooms = $query->get();
+
+        return view('customer.dashboard', compact('rooms'));
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Show all rooms (admin/general page)
+    |--------------------------------------------------------------------------
+    */
     public function index()
     {
         $rooms = Room::all();
         return view('rooms', compact('rooms'));
     }
 
-    // Show single room
+
+    /*
+    |--------------------------------------------------------------------------
+    | Show single room
+    |--------------------------------------------------------------------------
+    */
     public function show($id)
     {
         $room = Room::find($id);
+
         if (!$room) {
             return redirect()->back()->with('error', 'Room not found.');
         }
+
         return view('room', compact('room'));
     }
 
-    // Store a new room request
+
+    /*
+    |--------------------------------------------------------------------------
+    | Store new room (request for admin approval)
+    |--------------------------------------------------------------------------
+    */
     public function store(Request $request)
     {
-        // 🔹 Validate input
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
@@ -39,13 +96,12 @@ class RoomController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // 🔹 Handle image upload
         $imagePath = null;
+
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('rooms', 'public');
         }
 
-        // 🔹 Store into room_requests table
         RoomRequest::create([
             'name' => $request->name,
             'price' => $request->price,
@@ -54,26 +110,39 @@ class RoomController extends Controller
             'description' => $request->description,
             'services' => $request->services,
             'image' => $imagePath,
-            'status' => 'pending', // default status
+            'status' => 'pending',
         ]);
 
         return redirect()->back()->with('success', 'Room submitted for admin approval!');
     }
 
-    // Show edit form for approved rooms
+
+    /*
+    |--------------------------------------------------------------------------
+    | Edit room
+    |--------------------------------------------------------------------------
+    */
     public function edit($id)
     {
         $room = Room::find($id);
+
         if (!$room) {
             return redirect()->back()->with('error', 'Room not found.');
         }
+
         return view('edit-room', compact('room'));
     }
 
-    // Update an approved room
+
+    /*
+    |--------------------------------------------------------------------------
+    | Update room
+    |--------------------------------------------------------------------------
+    */
     public function update(Request $request, $id)
     {
         $room = Room::find($id);
+
         if (!$room) {
             return redirect()->back()->with('error', 'Room not found.');
         }
@@ -95,31 +164,36 @@ class RoomController extends Controller
         return redirect('/rooms')->with('success', 'Room updated successfully.');
     }
 
-    // Delete an approved room
+
+    /*
+    |--------------------------------------------------------------------------
+    | Delete room
+    |--------------------------------------------------------------------------
+    */
     public function delete($id)
     {
         $room = Room::find($id);
+
         if ($room) {
             $room->delete();
             return redirect('/rooms')->with('success', 'Room deleted successfully.');
         }
+
         return redirect('/rooms')->with('error', 'Room not found.');
     }
 
-    /*
-    |--------------------------------------------------------------------
-    | Cost Calculator Feature
-    |--------------------------------------------------------------------
-    */
 
-    // Show cost form
+    /*
+    |--------------------------------------------------------------------------
+    | Cost Calculator
+    |--------------------------------------------------------------------------
+    */
     public function costForm()
     {
         $rooms = Room::all();
         return view('cost', compact('rooms'));
     }
 
-    // Calculate cost
     public function calculateCost(Request $request)
     {
         $room = Room::find($request->room_id);
@@ -135,27 +209,39 @@ class RoomController extends Controller
     }
 
 
-    //search
-    public function search(Request $request)
+    /*
+    |--------------------------------------------------------------------------
+    | Travel Budget
+    |--------------------------------------------------------------------------
+    */
+    public function travelBudgetForm()
     {
-        $query = Room::query();
+        return view('travel_budget');
+    }
 
-        // Budget filter
-        if ($request->min_price) {
-            $query->where('price', '>=', $request->min_price);
+    public function travelBudgetCalculate(Request $request)
+    {
+        $request->validate([
+            'hotel_cost' => 'required|numeric',
+            'nights' => 'required|numeric',
+            'food_per_day' => 'required|numeric',
+            'transport_cost' => 'required|numeric',
+        ]);
+
+        $hotelTotal = $request->hotel_cost * $request->nights;
+        $foodTotal = $request->food_per_day * $request->nights;
+        $transportTotal = $request->transport_cost;
+
+        $total = $hotelTotal + $foodTotal + $transportTotal;
+
+        if ($total < 5000) {
+            $category = "Budget";
+        } elseif ($total < 15000) {
+            $category = "Moderate";
+        } else {
+            $category = "Luxury";
         }
 
-        if ($request->max_price) {
-            $query->where('price', '<=', $request->max_price);
-        }
-
-        // Guests filter
-        if ($request->guests) {
-            $query->where('persons', '>=', $request->guests);
-        }
-
-        $rooms = $query->get();
-
-        return view('search-results', compact('rooms'));
+        return view('travel_budget_result', compact('total', 'category'));
     }
 }

@@ -23,18 +23,13 @@
             <nav class="hidden md:flex items-center space-x-8 text-gray-700">
                 <a href="{{ route('home') }}">Home</a>
                 <a href="{{ route('destinations.index') }}">Destinations</a>
-<<<<<<< HEAD
-                <a href="#guides">Guides</a>
-=======
                 <a href="{{ route('guides.index') }}">Guides</a>
->>>>>>> master
                 <a href="{{ route('blogs.index') }}">Blogs</a>
                 <a href="#contact">Contact</a>
             </nav>
 
-            <!-- ✅ Only Get Started Button remains -->
             <div class="hidden md:flex space-x-4">
-                <a href="#" class="px-5 py-2 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:-translate-y-1 hover:scale-105">
+                <a href="{{ route('guides.index') }}" class="px-5 py-2 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:-translate-y-1 hover:scale-105">
                     Get Started
                 </a>
             </div>
@@ -122,8 +117,6 @@
                 </div>
             </div>
 
-<<<<<<< HEAD
-=======
             <!-- Map -->
             <div class="max-w-5xl bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200">
                 <div class="p-6 border-b border-slate-200">
@@ -178,7 +171,6 @@
                 @endif
             </div>
 
->>>>>>> master
             <!-- Buttons -->
             <div class="flex flex-wrap gap-4">
                 <a href="{{ route('destinations.index') }}"

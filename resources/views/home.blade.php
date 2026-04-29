@@ -22,18 +22,6 @@
             <nav class="hidden md:flex items-center space-x-8 text-gray-700">
                 <a href="{{ route('home') }}">Home</a>
                 <a href="{{ route('destinations.index') }}">Destinations</a>
-<<<<<<< HEAD
-                <a href="#guides">Guides</a>
-                <a href="{{ route('blogs.index') }}">Blogs</a>
-                <a href="#contact">Contact</a>
-            </nav>
-
-            <!-- ✅ Only Get Started Button remains -->
-            <div class="hidden md:flex space-x-4">
-                <a href="{{ route('login') }}" class="px-5 py-2 text-white bg-blue-600 rounded-full">
-                    Get Started
-                </a>
-=======
                 <a href="{{ route('guides.index') }}">Guides</a>
                 <a href="{{ route('blogs.index') }}">Blogs</a>
                 <a href="#contact">Contact</a>
@@ -51,7 +39,6 @@
                 <a href="{{ route('guides.apply') }}" class="px-5 py-2 text-blue-600 bg-white rounded-full shadow-lg hover:bg-gray-50 transition transform hover:-translate-y-1 hover:scale-105">
                     Become a Guide
                 </a>
->>>>>>> master
             </div>
 
             <button class="md:hidden text-2xl">☰</button>
@@ -122,22 +109,16 @@
             </div>
 
         </div>
-<<<<<<< HEAD
-=======
         <div class="text-center mt-10">
             <a href="{{ route('guides.index') }}" class="inline-flex items-center justify-center px-8 py-4 rounded-full bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">Browse Guides</a>
             <a href="{{ route('destinations.index') }}" class="ml-4 inline-flex items-center justify-center px-8 py-4 rounded-full bg-white text-blue-600 border border-blue-600 font-semibold hover:bg-blue-50 transition">Explore Destinations</a>
         </div>
->>>>>>> master
     </section>
 
     <!-- Footer -->
     <footer class="bg-blue-600 text-white py-6 mt-12 text-center">
         <p>&copy; {{ date('Y') }} Travel Navigator Explorer</p>
-<<<<<<< HEAD
-=======
         <p class="mt-2"><a href="/admin/login" class="text-blue-200 hover:text-white text-sm">Admin Login</a></p>
->>>>>>> master
     </footer>
 
 </body>

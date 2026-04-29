@@ -23,7 +23,11 @@
             <nav class="hidden md:flex items-center space-x-8 text-gray-700">
                 <a href="{{ route('home') }}">Home</a>
                 <a href="{{ route('destinations.index') }}">Destinations</a>
+<<<<<<< HEAD
                 <a href="#guides">Guides</a>
+=======
+                <a href="{{ route('guides.index') }}">Guides</a>
+>>>>>>> master
                 <a href="{{ route('blogs.index') }}">Blogs</a>
                 <a href="#contact">Contact</a>
             </nav>
@@ -118,6 +122,63 @@
                 </div>
             </div>
 
+<<<<<<< HEAD
+=======
+            <!-- Map -->
+            <div class="max-w-5xl bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200">
+                <div class="p-6 border-b border-slate-200">
+                    <h3 class="text-xl font-semibold text-gray-700">Location</h3>
+                    <p class="text-sm text-gray-500 mt-1">{{ $destination->location_name ?? 'Exact coordinates are shown below.' }}</p>
+                </div>
+                @if($destination->latitude && $destination->longitude)
+                    <iframe
+                        class="w-full h-80"
+                        loading="lazy"
+                        allowfullscreen
+                        src="https://www.google.com/maps?q={{ $destination->latitude }},{{ $destination->longitude }}&output=embed">
+                    </iframe>
+                @else
+                    <div class="p-10 text-center text-gray-500">
+                        Location data is not available for this destination.
+                    </div>
+                @endif
+            </div>
+
+            <!-- Local Guides -->
+            <div class="max-w-5xl">
+                <div class="mt-10 mb-6">
+                    <h3 class="text-3xl font-bold text-gray-800">Local Guides</h3>
+                    <p class="text-gray-600 mt-2">Browse approved guides for this destination and hire one directly.</p>
+                </div>
+
+                @if(isset($guides) && $guides->count())
+                    <div class="grid gap-6 sm:grid-cols-2">
+                        @foreach($guides as $guide)
+                            <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                                <div class="h-60 overflow-hidden">
+                                    <img src="{{ $guide->photo ? asset($guide->photo) : 'https://via.placeholder.com/500x400?text=Guide' }}" class="w-full h-full object-cover" alt="{{ $guide->name }}">
+                                </div>
+                                <div class="p-6">
+                                    <h4 class="text-xl font-semibold text-gray-800">{{ $guide->name }}</h4>
+                                    <p class="text-sm text-gray-500 mt-2">{{ $guide->specialization }}</p>
+                                    <p class="text-sm text-gray-500 mt-1"><strong>Languages:</strong> {{ $guide->languages }}</p>
+                                    <p class="text-sm text-gray-500 mt-1"><strong>Experience:</strong> {{ $guide->experience_years }} years</p>
+                                    <div class="mt-4 flex items-center justify-between gap-3">
+                                        <span class="font-semibold text-slate-900">৳ {{ number_format($guide->price_per_day, 2) }}/day</span>
+                                        <a href="{{ route('guides.show', $guide->id) }}" class="inline-flex items-center px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition">View guide</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="rounded-3xl border border-slate-200 bg-blue-50 p-8 text-center text-gray-600">
+                        No approved guides are available for this destination yet.
+                    </div>
+                @endif
+            </div>
+
+>>>>>>> master
             <!-- Buttons -->
             <div class="flex flex-wrap gap-4">
                 <a href="{{ route('destinations.index') }}"

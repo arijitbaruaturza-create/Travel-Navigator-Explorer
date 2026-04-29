@@ -207,12 +207,6 @@ class RoomController extends Controller
 
         return view('cost_result', compact('room', 'nights', 'total'));
     }
-<<<<<<< HEAD
-	    // -------------------------------
-    // Travel Budget Feature
-    // -------------------------------
-
-=======
 
 
     /*
@@ -220,7 +214,6 @@ class RoomController extends Controller
     | Travel Budget
     |--------------------------------------------------------------------------
     */
->>>>>>> dev
     public function travelBudgetForm()
     {
         return view('travel_budget');

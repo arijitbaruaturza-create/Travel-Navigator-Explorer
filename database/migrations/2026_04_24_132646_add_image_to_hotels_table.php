@@ -25,8 +25,4 @@ return new class extends Migration
             $table->dropColumn('image');
         });
     }
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> dev

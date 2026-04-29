@@ -40,6 +40,7 @@ class HotelController extends Controller
 
         return redirect()->back()->with('success', 'Hotel added successfully!');
     }
+<<<<<<< HEAD
 	public function destroy($id)
 	{
 		$hotel = Hotel::findOrFail($id);
@@ -47,4 +48,13 @@ class HotelController extends Controller
 
 		return redirect()->back()->with('success', 'Hotel deleted successfully!');
 	}
+=======
+    public function destroy($id)
+    {
+        $hotel = Hotel::findOrFail($id);
+        $hotel->delete();
+
+        return redirect()->back()->with('success', 'Hotel deleted successfully!');
+    }
+>>>>>>> dev
 }

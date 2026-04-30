@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\DestinationController;
@@ -20,12 +23,27 @@ use App\Http\Controllers\Customer\AuthController;
 | Public Routes
 |--------------------------------------------------------------------------
 */
+use App\Http\Controllers\HotelController;
+use App\Http\Controllers\Customer\AuthController;
 
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+
+// Home
 // Home
 Route::get('/', function () {
     return view('home');
 })->name('home');
 
+
+/*
+|--------------------------------------------------------------------------
+| Destinations
+|--------------------------------------------------------------------------
+*/
 
 /*
 |--------------------------------------------------------------------------
@@ -80,7 +98,14 @@ Route::get('/rooms/edit/{id}', [RoomController::class, 'edit']);
 Route::post('/rooms/update/{id}', [RoomController::class, 'update']);
 Route::get('/rooms/{id}', [RoomController::class, 'show'])->name('rooms.show');
 
+Route::get('/rooms/{id}', [RoomController::class, 'show'])->name('rooms.show');
 
+
+/*
+|--------------------------------------------------------------------------
+| Cost Calculator
+|--------------------------------------------------------------------------
+*/
 /*
 |--------------------------------------------------------------------------
 | Cost Calculator
@@ -89,6 +114,21 @@ Route::get('/rooms/{id}', [RoomController::class, 'show'])->name('rooms.show');
 Route::get('/cost', [RoomController::class, 'costForm']);
 Route::post('/cost/calculate', [RoomController::class, 'calculateCost']);
 
+
+/*
+|--------------------------------------------------------------------------
+| Travel Budget
+|--------------------------------------------------------------------------
+*/
+Route::get('/travel-budget', [RoomController::class, 'travelBudgetForm']);
+Route::post('/travel-budget/calculate', [RoomController::class, 'travelBudgetCalculate']);
+
+
+/*
+|--------------------------------------------------------------------------
+| Blogs
+|--------------------------------------------------------------------------
+*/
 
 /*
 |--------------------------------------------------------------------------
@@ -123,6 +163,22 @@ Route::delete('/hotels/{id}', [HotelController::class, 'destroy']);
 | Admin Auth
 |--------------------------------------------------------------------------
 */
+
+/*
+|--------------------------------------------------------------------------
+| Hotels
+|--------------------------------------------------------------------------
+*/
+Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
+Route::post('/hotels', [HotelController::class, 'store']);
+Route::delete('/hotels/{id}', [HotelController::class, 'destroy']);
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin Auth
+|--------------------------------------------------------------------------
+*/
 Route::get('/admin/register', [AdminAuthController::class, 'showRegister']);
 Route::post('/admin/register', [AdminAuthController::class, 'register']);
 
@@ -131,6 +187,12 @@ Route::post('/admin/login', [AdminAuthController::class, 'login']);
 
 Route::get('/admin/logout', [AdminAuthController::class, 'logout']);
 
+
+/*
+|--------------------------------------------------------------------------
+| Admin Panel
+|--------------------------------------------------------------------------
+*/
 
 /*
 |--------------------------------------------------------------------------

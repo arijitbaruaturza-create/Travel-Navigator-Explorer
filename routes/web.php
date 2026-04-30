@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 
-use Illuminate\Support\Facades\Route;
+
 
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\BlogController;
@@ -23,8 +23,8 @@ use App\Http\Controllers\Customer\AuthController;
 | Public Routes
 |--------------------------------------------------------------------------
 */
-use App\Http\Controllers\HotelController;
-use App\Http\Controllers\Customer\AuthController;
+
+
 
 /*
 |--------------------------------------------------------------------------

@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('hotels', function (Blueprint $table) {
-            $table->string('image')->nullable()->after('map_location');
+        Schema::table('guides', function (Blueprint $table) {
+            $table->string('email')->nullable()->after('name');
+            $table->string('password')->nullable()->after('email');
         });
     }
 
@@ -21,8 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('hotels', function (Blueprint $table) {
-            $table->dropColumn('image');
+        Schema::table('guides', function (Blueprint $table) {
+            $table->dropColumn(['email', 'password']);
         });
     }
 };

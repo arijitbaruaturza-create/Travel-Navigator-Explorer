@@ -207,41 +207,4 @@ class RoomController extends Controller
 
         return view('cost_result', compact('room', 'nights', 'total'));
     }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Travel Budget
-    |--------------------------------------------------------------------------
-    */
-    public function travelBudgetForm()
-    {
-        return view('travel_budget');
-    }
-
-    public function travelBudgetCalculate(Request $request)
-    {
-        $request->validate([
-            'hotel_cost' => 'required|numeric',
-            'nights' => 'required|numeric',
-            'food_per_day' => 'required|numeric',
-            'transport_cost' => 'required|numeric',
-        ]);
-
-        $hotelTotal = $request->hotel_cost * $request->nights;
-        $foodTotal = $request->food_per_day * $request->nights;
-        $transportTotal = $request->transport_cost;
-
-        $total = $hotelTotal + $foodTotal + $transportTotal;
-
-        if ($total < 5000) {
-            $category = "Budget";
-        } elseif ($total < 15000) {
-            $category = "Moderate";
-        } else {
-            $category = "Luxury";
-        }
-
-        return view('travel_budget_result', compact('total', 'category'));
-    }
 }

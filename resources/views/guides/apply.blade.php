@@ -6,7 +6,45 @@
     <title>Guide Registration</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 text-slate-800">
+<body class="bg-slate-50 text-slate-800 pt-20">
+
+    <!-- Navbar -->
+    <header class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-[95%] md:w-[90%] rounded-3xl backdrop-blur-xl bg-white/30 border border-white/20 shadow-2xl">
+        <div class="container mx-auto flex justify-between items-center px-6 py-3 relative z-10">
+            
+            <div class="absolute inset-0 rounded-3xl bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-500 opacity-20 blur-3xl pointer-events-none"></div>
+
+            <h1 class="relative text-2xl font-extrabold text-blue-600">
+                Travel<span class="text-gray-800">Navigator</span>
+            </h1>
+
+            <nav class="hidden md:flex items-center space-x-8 text-gray-700">
+                <a href="{{ route('home') }}">Home</a>
+                <a href="{{ route('destinations.index') }}">Destinations</a>
+                <a href="{{ route('guides.index') }}">Guides</a>
+                <a href="{{ route('blogs.index') }}">Blogs</a>
+                <a href="#contact">Contact</a>
+                <a href="/guide/login" class="text-blue-600 font-semibold">Guide Portal</a>
+				
+				
+            </nav>
+
+
+
+            <!-- ✅ Only Get Started Button remains -->
+            <div class="hidden md:flex space-x-4">
+                <a href="{{ route('guides.index') }}" class="px-5 py-2 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:-translate-y-1 hover:scale-105">
+                    Get Started
+                </a>
+                <a href="{{ route('guides.apply') }}" class="px-5 py-2 text-blue-600 bg-white rounded-full shadow-lg hover:bg-gray-50 transition transform hover:-translate-y-1 hover:scale-105">
+                    Become a Guide
+                </a>
+            </div>
+
+            <button class="md:hidden text-2xl">☰</button>
+        </div>
+    </header>
+
     <div class="max-w-3xl mx-auto p-4">
         <div class="mb-8">
             <h1 class="text-4xl font-bold">Guide Registration</h1>
